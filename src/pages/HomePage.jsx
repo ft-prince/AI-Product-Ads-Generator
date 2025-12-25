@@ -56,18 +56,6 @@ export default function HomePage({ generatedAds }) {
           </div>
           <div className="flex gap-2 sm:gap-3">
             <button
-              onClick={() => navigate("/dashboard")}
-              className="px-3 sm:px-4 py-2 rounded-lg bg-slate-800 text-slate-300 hover:bg-slate-700 transition-all text-xs sm:text-sm hidden md:block"
-            >
-              Dashboard
-            </button>
-            <button
-              onClick={() => navigate("/gallery")}
-              className="px-3 sm:px-4 py-2 rounded-lg bg-slate-800 text-slate-300 hover:bg-slate-700 transition-all text-xs sm:text-sm hidden md:block"
-            >
-              Gallery
-            </button>
-            <button
               onClick={() => navigate("/generator")}
               className="px-4 sm:px-6 py-2 rounded-lg bg-gradient-to-r from-violet-500 to-fuchsia-500 font-semibold hover:opacity-90 transition-opacity flex items-center gap-2 text-xs sm:text-sm"
             >
@@ -127,6 +115,62 @@ export default function HomePage({ generatedAds }) {
               <p className="text-slate-400 text-xs sm:text-sm">{feature.description}</p>
             </div>
           ))}
+        </div>
+
+        {/* AI-Generated Showcase */}
+        <div className="mb-12 sm:mb-20">
+          <div className="text-center mb-8 sm:mb-12">
+            <div className="inline-flex items-center gap-2 px-3 sm:px-4 py-2 rounded-full bg-fuchsia-500/10 border border-fuchsia-500/20 text-fuchsia-300 text-xs sm:text-sm mb-4">
+              <ImageIcon className="w-3 sm:w-4 h-3 sm:h-4" />
+              <span>AI-Powered Banner Creations That Inspire</span>
+            </div>
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-3 sm:mb-4 bg-gradient-to-r from-white via-violet-200 to-fuchsia-200 bg-clip-text text-transparent">
+              Real Results from Our AI
+            </h2>
+            <p className="text-slate-300 text-sm sm:text-base md:text-lg max-w-2xl mx-auto">
+              Every banner below was created in seconds using simple prompts. 
+              From e-commerce to food delivery, fashion to tech—see the quality and variety our AI delivers.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+            {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((num) => (
+              <div
+                key={num}
+                className="group relative rounded-xl sm:rounded-2xl overflow-hidden border border-slate-800 hover:border-violet-500 transition-all bg-slate-900/50 hover:shadow-2xl hover:shadow-violet-500/10"
+              >
+                <div className="aspect-video overflow-hidden bg-slate-800">
+                  <img
+                    src={`/home/${num}.png`}
+                    alt={`AI-generated banner example ${num}`}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    loading="lazy"
+                  />
+                </div>
+                <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  <div className="absolute bottom-0 left-0 right-0 p-4 transform translate-y-2 group-hover:translate-y-0 transition-transform duration-300">
+                    <div className="flex items-center gap-2 text-xs sm:text-sm text-violet-300">
+                      <Sparkles className="w-3 sm:w-4 h-3 sm:h-4" />
+                      <span>Generated with AI</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div className="text-center mt-8 sm:mt-10">
+            <p className="text-slate-400 text-xs sm:text-sm mb-4">
+              Each banner crafted in under 10 seconds with professional-grade quality
+            </p>
+            <button
+              onClick={() => navigate("/generator")}
+              className="px-5 sm:px-6 py-2.5 sm:py-3 rounded-xl bg-gradient-to-r from-violet-500/10 to-fuchsia-500/10 border border-violet-500/30 hover:border-violet-500 text-violet-200 font-medium text-sm sm:text-base transition-all inline-flex items-center gap-2"
+            >
+              Create Your Own Banner
+              <ArrowRight className="w-3 sm:w-4 h-3 sm:h-4" />
+            </button>
+          </div>
         </div>
       </section>
 

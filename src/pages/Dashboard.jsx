@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { 
   Sparkles, 
@@ -47,9 +47,6 @@ export default function Dashboard({ generatedAds }) {
     }
   }, []);
 
-  const weekAgo = useMemo(() => {
-  return Date.now() - 7 * 24 * 60 * 60 * 1000;
-}, []);
 
   // Calculate statistics
   const stats = {

@@ -366,11 +366,9 @@ export default function AdGenerator({ generatedAds, setGeneratedAds }) {
     setProgressMessage("Enhancing prompt...");
 
     // Set timeout for enhancement
-    const timeoutId = setTimeout(() => {
-      if (isEnhancing) {
-        setProgressMessage("Still working... This is taking longer than usual");
-      }
-    }, 10000); // 10 seconds
+    const warningTimeoutId = setTimeout(() => {
+      setProgressMessage("Still working... First request may take longer (cold start)");
+    }, 10000); // 10 seconds warning
 
     try {
       let fullPrompt = inputPrompt;
@@ -378,38 +376,79 @@ export default function AdGenerator({ generatedAds, setGeneratedAds }) {
       if (promotionText) fullPrompt += ` Promotion: ${promotionText}`;
       if (selectedStyle) fullPrompt += ` Style: ${selectedStyle}`;
 
-      const controller = new AbortController();
-      const timeoutSignal = setTimeout(() => controller.abort(), 120000); // 30 second timeout
+      // Retry logic for cold start
+      let enhanceData = null;
+      const maxRetries = 2;
 
-      const enhanceResponse = await fetch(CLOUDFLARE_API, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ input: fullPrompt }),
-        signal: controller.signal
-      });
+      for (let attempt = 0; attempt < maxRetries; attempt++) {
+        try {
+          if (attempt > 0) {
+            setProgressMessage(`Retrying... (attempt ${attempt + 1}/${maxRetries})`);
+          }
 
-      clearTimeout(timeoutSignal);
-      clearTimeout(timeoutId);
+          const controller = new AbortController();
+          // First attempt gets 60s (cold start), subsequent attempts get 30s
+          const timeout = attempt === 0 ? 60000 : 30000;
+          const abortTimeoutId = setTimeout(() => controller.abort(), timeout);
 
-      if (!enhanceResponse.ok) {
-        throw new Error(`Enhancement failed: ${enhanceResponse.status}`);
+          const enhanceResponse = await fetch(CLOUDFLARE_API, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ input: fullPrompt }),
+            signal: controller.signal
+          });
+
+          clearTimeout(abortTimeoutId);
+
+          if (!enhanceResponse.ok) {
+            const errorText = await enhanceResponse.text();
+            throw new Error(`Enhancement failed (${enhanceResponse.status}): ${errorText}`);
+          }
+
+          enhanceData = await enhanceResponse.json();
+          
+          if (!enhanceData || !enhanceData.refined_prompt) {
+            throw new Error('Invalid response from enhancement service');
+          }
+
+          // Success! Break out of retry loop
+          break;
+
+        } catch (error) {
+          // If it's an abort error and not the last attempt, retry
+          if (error.name === 'AbortError' && attempt < maxRetries - 1) {
+            console.log(`Attempt ${attempt + 1} timed out, retrying...`);
+            await new Promise(resolve => setTimeout(resolve, 2000)); // Wait 2s before retry
+            continue;
+          }
+          
+          // If it's the last attempt or different error, throw
+          throw error;
+        }
       }
 
-      const enhanceData = await enhanceResponse.json();
+      clearTimeout(warningTimeoutId);
+
+      if (!enhanceData || !enhanceData.refined_prompt) {
+        throw new Error('Failed to get valid response after retries');
+      }
+
       setEnhancedPrompt(enhanceData.refined_prompt);
       setShowEnhanced(true);
       setProgress(40);
       setProgressMessage("Prompt enhanced!");
+      
     } catch (error) {
-      clearTimeout(timeoutId);
-      console.error("Error:", error);
+      clearTimeout(warningTimeoutId);
+      console.error("Enhancement error:", error);
       
       if (error.name === 'AbortError') {
-        alert('Request timeout. The AI service is taking too long. Please try again.');
+        alert('Request timeout. The AI service took too long.\n\n💡 First request is often slower (cold start). Please try again - it should be faster!');
       } else {
-        alert(`Failed to enhance prompt: ${error.message}\n\nTip: Try a simpler description or try again in a moment.`);
+        alert(`Failed to enhance prompt: ${error.message}\n\n💡 Tip: Try again or use a simpler description.`);
       }
       setProgress(0);
+      setProgressMessage("");
     } finally {
       setIsEnhancing(false);
     }
@@ -666,7 +705,7 @@ export default function AdGenerator({ generatedAds, setGeneratedAds }) {
                 <Sparkles className="w-4 sm:w-6 h-4 sm:h-6" />
               </div>
               <div className="hidden sm:block">
-                <h1 className="text-lg sm:text-xl font-bold">Ad Generator</h1>
+                <h1 className="text-lg sm:text-xl font-bold">Snap Banner</h1>
                 <p className="text-xs text-slate-400">Create stunning banners</p>
               </div>
               <h1 className="text-base font-bold sm:hidden">Generator</h1>
