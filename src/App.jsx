@@ -11,19 +11,26 @@ const App = () => {
   // Load generated ads from localStorage
   useEffect(() => {
     try {
-      const savedAds = localStorage.getItem("ai-ads-gallery");
+      const savedAds = localStorage.getItem('ai-ads-gallery');
       if (savedAds) {
-        setGeneratedAds(JSON.parse(savedAds));
+        const parsed = JSON.parse(savedAds);
+        // Ensure it's an array
+        setGeneratedAds(Array.isArray(parsed) ? parsed : []);
       }
     } catch (error) {
-      console.error("Error loading ads:", error);
+      console.error('Error loading ads:', error);
+      setGeneratedAds([]);
     }
   }, []);
 
   // Save ads to localStorage
   useEffect(() => {
     if (generatedAds.length > 0) {
-      localStorage.setItem("ai-ads-gallery", JSON.stringify(generatedAds));
+      try {
+        localStorage.setItem('ai-ads-gallery', JSON.stringify(generatedAds));
+      } catch (error) {
+        console.error('Error saving ads:', error);
+      }
     }
   }, [generatedAds]);
 
@@ -32,15 +39,8 @@ const App = () => {
       <div>
         <Routes>
           <Route path="/" element={<HomePage generatedAds={generatedAds} />} />
-          <Route
-            path="/dashboard"
-            element={<Dashboard generatedAds={generatedAds} />}
-          />
           <Route path="/generator" element={<AdGenerator />} />
-          <Route
-            path="/gallery"
-            element={<Gallery generatedAds={generatedAds} />}
-          />
+
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </div>

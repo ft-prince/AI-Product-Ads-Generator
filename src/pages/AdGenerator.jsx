@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import {
   Sparkles,
   ArrowLeft,
@@ -8,7 +8,6 @@ import {
   Edit2,
   Download,
   Loader2,
-  Send,
   Check,
   X,
   ShoppingBag,
@@ -16,26 +15,252 @@ import {
   UtensilsCrossed,
   Briefcase,
   Palette,
+  Hash,
+  MessageSquare,
+  Copy,
+  Menu,
+  ChevronLeft,
+  Lightbulb,
 } from "lucide-react";
+
+// Examples Modal Component (inline to avoid import issues)
+function ExamplesModal({ isOpen, onClose, onUseExample }) {
+  const [copiedId, setCopiedId] = useState(null);
+
+  const examples = [
+    {
+      id: 1,
+      category: "E-commerce",
+      brand: "TechVibe",
+      promotion: "40% Off Black Friday Sale",
+      style: "modern",
+      description: "Sleek wireless earbuds with charging case, floating on gradient background, product photography style",
+      tags: ["Tech", "Products", "Sale"]
+    },
+    {
+      id: 2,
+      category: "Food",
+      brand: "Brew & Co.",
+      promotion: "Buy 2 Get 1 Free",
+      style: "casual",
+      description: "Steaming cup of latte with latte art, coffee beans scattered around, rustic wooden table, morning light",
+      tags: ["Coffee", "Beverage", "Cafe"]
+    },
+    {
+      id: 3,
+      category: "Clothing",
+      brand: "FitPro Athletics",
+      promotion: "Summer Sale - Up to 60% Off",
+      style: "vibrant",
+      description: "Athletic woman in yoga pose wearing activewear, sunset beach background, energetic and motivational",
+      tags: ["Sportswear", "Fitness", "Active"]
+    },
+    {
+      id: 4,
+      category: "Business",
+      brand: "Pixel Perfect",
+      promotion: "Free Consultation",
+      style: "professional",
+      description: "Modern office workspace, laptop showing creative designs, team collaboration, sleek and corporate",
+      tags: ["Agency", "Professional", "Corporate"]
+    },
+    {
+      id: 5,
+      category: "E-commerce",
+      brand: "Cozy Haven",
+      promotion: "Free Shipping This Week",
+      style: "minimalist",
+      description: "Scandinavian-style living room with plants, natural wood furniture, warm sunlight through windows",
+      tags: ["Home Decor", "Minimalist", "Interior"]
+    },
+    {
+      id: 6,
+      category: "Food",
+      brand: "Bella Italia",
+      promotion: "Happy Hour 5-7 PM",
+      style: "vibrant",
+      description: "Delicious pizza with melting cheese, fresh basil, tomatoes, Italian flag colors in background",
+      tags: ["Restaurant", "Italian", "Food"]
+    },
+    {
+      id: 7,
+      category: "Clothing",
+      brand: "Noir Elegance",
+      promotion: "Exclusive Collection Launch",
+      style: "luxury",
+      description: "Black evening gown on runway, spotlight effect, bokeh lights, high fashion photography",
+      tags: ["Luxury", "Fashion", "Elegant"]
+    },
+    {
+      id: 8,
+      category: "E-commerce",
+      brand: "Glow Cosmetics",
+      promotion: "New Skincare Line",
+      style: "elegant",
+      description: "Luxury skincare bottles on marble surface, water droplets, botanical elements, soft pink lighting, spa-like atmosphere",
+      tags: ["Beauty", "Skincare", "Premium"]
+    }
+  ];
+
+  const quickTips = [
+    "Be specific about lighting (studio, natural, golden hour)",
+    "Mention photography style (commercial, editorial, product)",
+    "Include mood/atmosphere (energetic, calm, luxurious)",
+    "Describe composition (centered, floating, close-up)",
+    "Add quality keywords (professional, high-resolution, detailed)"
+  ];
+
+  const copyExample = (example) => {
+    const text = `Brand: ${example.brand}
+Promotion: ${example.promotion}
+Style: ${example.style}
+Description: ${example.description}`;
+    
+    navigator.clipboard.writeText(text);
+    setCopiedId(example.id);
+    setTimeout(() => setCopiedId(null), 2000);
+  };
+
+  if (!isOpen) return null;
+
+  return (
+    <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-6">
+      <div className="max-w-5xl w-full bg-slate-900 rounded-2xl border border-slate-800 overflow-hidden max-h-[90vh] flex flex-col">
+        {/* Header */}
+        <div className="p-6 border-b border-slate-800 flex items-center justify-between bg-slate-950/50">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-violet-500 to-fuchsia-500 flex items-center justify-center">
+              <Lightbulb className="w-6 h-6" />
+            </div>
+            <div>
+              <h2 className="text-2xl font-bold">Examples & Inspiration</h2>
+              <p className="text-sm text-slate-400">Get started with these ready-to-use templates</p>
+            </div>
+          </div>
+          <button
+            onClick={onClose}
+            className="p-2 hover:bg-slate-800 rounded-lg transition-all"
+          >
+            <X className="w-6 h-6" />
+          </button>
+        </div>
+
+        {/* Content */}
+        <div className="flex-1 overflow-y-auto p-6">
+          {/* Quick Tips */}
+          <div className="mb-8 bg-violet-500/10 border border-violet-500/20 rounded-xl p-6">
+            <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
+              <Lightbulb className="w-5 h-5 text-violet-400" />
+              Quick Tips for Better Results
+            </h3>
+            <ul className="space-y-2">
+              {quickTips.map((tip, idx) => (
+                <li key={idx} className="flex items-start gap-3 text-sm text-slate-300">
+                  <span className="text-violet-400 mt-0.5">•</span>
+                  <span>{tip}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Examples Grid */}
+          <h3 className="text-lg font-semibold mb-4">Popular Examples</h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {examples.map((example) => (
+              <div
+                key={example.id}
+                className="bg-slate-800/50 rounded-xl p-5 border border-slate-700 hover:border-violet-500 transition-all group"
+              >
+                <div className="flex items-start justify-between mb-4">
+                  <div className="flex-1">
+                    <div className="flex items-center gap-2 mb-2">
+                      <span className="px-2 py-1 bg-violet-500/20 text-violet-300 rounded text-xs font-medium">
+                        {example.category}
+                      </span>
+                      <span className="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs font-medium capitalize">
+                        {example.style}
+                      </span>
+                    </div>
+                    <h4 className="font-semibold text-lg">{example.brand}</h4>
+                    <p className="text-sm text-violet-400 mt-1">{example.promotion}</p>
+                  </div>
+                  <div className="flex gap-2">
+                    <button
+                      onClick={() => copyExample(example)}
+                      className="p-2 hover:bg-slate-700 rounded-lg transition-all"
+                      title="Copy example"
+                    >
+                      {copiedId === example.id ? (
+                        <Check className="w-4 h-4 text-green-400" />
+                      ) : (
+                        <Copy className="w-4 h-4" />
+                      )}
+                    </button>
+                  </div>
+                </div>
+
+                <p className="text-sm text-slate-300 mb-4 line-clamp-3">
+                  {example.description}
+                </p>
+
+                <div className="flex flex-wrap gap-2 mb-4">
+                  {example.tags.map((tag, idx) => (
+                    <span
+                      key={idx}
+                      className="px-2 py-1 bg-slate-700/50 text-slate-400 rounded text-xs"
+                    >
+                      #{tag}
+                    </span>
+                  ))}
+                </div>
+
+                <button
+                  onClick={() => {
+                    onUseExample(example);
+                    onClose();
+                  }}
+                  className="w-full py-2 bg-gradient-to-r from-violet-500 to-fuchsia-500 rounded-lg font-semibold text-sm hover:opacity-90 transition-all"
+                >
+                  Use This Example
+                </button>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
 
 export default function AdGenerator({ generatedAds, setGeneratedAds }) {
   const navigate = useNavigate();
-  const location = useLocation();
 
   const [chats, setChats] = useState([]);
   const [activeChat, setActiveChat] = useState(null);
+  const [selectedCategory, setSelectedCategory] = useState("E-commerce");
+  const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [showExamples, setShowExamples] = useState(false);
+  
+  // Form inputs
   const [inputPrompt, setInputPrompt] = useState("");
   const [enhancedPrompt, setEnhancedPrompt] = useState("");
-  const [isEnhancing, setIsEnhancing] = useState(false);
-  const [isGenerating, setIsGenerating] = useState(false);
-  const [showEnhanced, setShowEnhanced] = useState(false);
-  const [editingChatId, setEditingChatId] = useState(null);
-  const [editingName, setEditingName] = useState("");
-
-  // Brand details
   const [brandName, setBrandName] = useState("");
   const [promotionText, setPromotionText] = useState("");
   const [selectedStyle, setSelectedStyle] = useState("modern");
+  
+  // UI states
+  const [isEnhancing, setIsEnhancing] = useState(false);
+  const [isGenerating, setIsGenerating] = useState(false);
+  const [showEnhanced, setShowEnhanced] = useState(false);
+  const [progress, setProgress] = useState(0);
+  const [progressMessage, setProgressMessage] = useState("");
+  const [editingChatId, setEditingChatId] = useState(null);
+  const [editingName, setEditingName] = useState("");
+  
+  // Generated content
+  const [generatedImage, setGeneratedImage] = useState(null);
+  const [caption, setCaption] = useState("");
+  const [hashtags, setHashtags] = useState([]);
 
   const CLOUDFLARE_API = import.meta.env.VITE_CLOUDFLARE_API;
   const DEAPI_KEY = import.meta.env.VITE_DEAPI_KEY;
@@ -64,19 +289,12 @@ export default function AdGenerator({ generatedAds, setGeneratedAds }) {
     try {
       const savedChats = localStorage.getItem("ai-ad-chats");
       if (savedChats) {
-        const parsedChats = JSON.parse(savedChats);
-        setChats(parsedChats);
-
-        // Load specific chat if passed via navigation
-        if (location.state?.chatId) {
-          const chat = parsedChats.find((c) => c.id === location.state.chatId);
-          if (chat) setActiveChat(chat);
-        }
+        setChats(JSON.parse(savedChats));
       }
     } catch (error) {
       console.error("Error loading chats:", error);
     }
-  }, [location]);
+  }, []);
 
   // Save chats
   useEffect(() => {
@@ -85,21 +303,27 @@ export default function AdGenerator({ generatedAds, setGeneratedAds }) {
     }
   }, [chats]);
 
-  const createNewChat = (category = "General") => {
+  // Get chats by category
+  const chatsByCategory = chats.reduce((acc, chat) => {
+    const cat = chat.category || "General";
+    if (!acc[cat]) acc[cat] = [];
+    acc[cat].push(chat);
+    return acc;
+  }, {});
+
+  const createNewChat = (category) => {
+    const categoryChats = chats.filter((c) => c.category === category);
     const newChat = {
       id: Date.now().toString(),
-      name: `${category} Campaign ${
-        chats.filter((c) => c.category === category).length + 1
-      }`,
+      name: `${category} Campaign ${categoryChats.length + 1}`,
       category,
       messages: [],
       createdAt: Date.now(),
     };
     setChats([newChat, ...chats]);
     setActiveChat(newChat);
-    setShowEnhanced(false);
-    setEnhancedPrompt("");
-    setInputPrompt("");
+    setSelectedCategory(category);
+    resetForm();
   };
 
   const deleteChat = (chatId) => {
@@ -122,13 +346,26 @@ export default function AdGenerator({ generatedAds, setGeneratedAds }) {
     setEditingChatId(null);
   };
 
+  const resetForm = () => {
+    setInputPrompt("");
+    setEnhancedPrompt("");
+    setBrandName("");
+    setPromotionText("");
+    setShowEnhanced(false);
+    setGeneratedImage(null);
+    setCaption("");
+    setHashtags([]);
+    setProgress(0);
+  };
+
   const enhancePrompt = async () => {
     if (!inputPrompt.trim()) return;
 
     setIsEnhancing(true);
+    setProgress(10);
+    setProgressMessage("Enhancing prompt...");
 
     try {
-      // Build comprehensive prompt with brand details
       let fullPrompt = inputPrompt;
       if (brandName) fullPrompt = `Brand: ${brandName}. ${fullPrompt}`;
       if (promotionText) fullPrompt += ` Promotion: ${promotionText}`;
@@ -147,9 +384,12 @@ export default function AdGenerator({ generatedAds, setGeneratedAds }) {
       const enhanceData = await enhanceResponse.json();
       setEnhancedPrompt(enhanceData.refined_prompt);
       setShowEnhanced(true);
+      setProgress(40);
+      setProgressMessage("Prompt enhanced!");
     } catch (error) {
       console.error("Error:", error);
       alert(`Failed to enhance prompt: ${error.message}`);
+      setProgress(0);
     } finally {
       setIsEnhancing(false);
     }
@@ -158,25 +398,10 @@ export default function AdGenerator({ generatedAds, setGeneratedAds }) {
   const generateImage = async () => {
     if (!enhancedPrompt.trim() || !activeChat) return;
 
-    const userMessage = {
-      id: Date.now().toString(),
-      type: "user",
-      content: inputPrompt,
-      brandName,
-      promotionText,
-      style: selectedStyle,
-      timestamp: Date.now(),
-    };
-
-    const updatedChat = {
-      ...activeChat,
-      messages: [...activeChat.messages, userMessage],
-    };
-    setActiveChat(updatedChat);
-    setChats(chats.map((c) => (c.id === activeChat.id ? updatedChat : c)));
-
-    setShowEnhanced(false);
     setIsGenerating(true);
+    setShowEnhanced(false);
+    setProgress(60);
+    setProgressMessage("Generating image...");
 
     try {
       const imageResponse = await fetch(
@@ -195,7 +420,7 @@ export default function AdGenerator({ generatedAds, setGeneratedAds }) {
             height: 576,
             steps: 20,
             guidance: 7.5,
-            seed: 42,
+            seed: -1,
           }),
         }
       );
@@ -207,7 +432,9 @@ export default function AdGenerator({ generatedAds, setGeneratedAds }) {
       const imageData = await imageResponse.json();
       const requestId = imageData.data.request_id;
 
-      // Poll for result
+      setProgress(80);
+      setProgressMessage("Processing image...");
+
       const pollResult = async (reqId, maxAttempts = 60) => {
         for (let i = 0; i < maxAttempts; i++) {
           const statusResponse = await fetch(
@@ -239,10 +466,37 @@ export default function AdGenerator({ generatedAds, setGeneratedAds }) {
       };
 
       const imageUrl = await pollResult(requestId);
+      
+      setProgress(90);
+      setProgressMessage("Generating caption...");
 
-      // Add to messages
+      const metadataResponse = await fetch(CLOUDFLARE_API, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ 
+          input: `Generate a social media caption and hashtags for this ad: ${enhancedPrompt}. Brand: ${brandName || 'N/A'}. Promotion: ${promotionText || 'N/A'}`,
+          mode: "caption"
+        }),
+      });
+
+      let generatedCaption = "";
+      let generatedHashtags = [];
+
+      if (metadataResponse.ok) {
+        const metadataData = await metadataResponse.json();
+        generatedCaption = metadataData.caption || "";
+        generatedHashtags = metadataData.hashtags || [];
+      }
+
+      setProgress(100);
+      setProgressMessage("Complete!");
+
+      setGeneratedImage(imageUrl);
+      setCaption(generatedCaption);
+      setHashtags(generatedHashtags);
+
       const imageMessage = {
-        id: (Date.now() + 1).toString(),
+        id: Date.now().toString(),
         type: "image",
         content: imageUrl,
         prompt: enhancedPrompt,
@@ -250,41 +504,61 @@ export default function AdGenerator({ generatedAds, setGeneratedAds }) {
         brandName,
         promotionText,
         style: selectedStyle,
+        caption: generatedCaption,
+        hashtags: generatedHashtags,
         timestamp: Date.now(),
       };
 
-      const finalChat = {
-        ...updatedChat,
-        messages: [...updatedChat.messages, imageMessage],
+      const updatedChat = {
+        ...activeChat,
+        messages: [...activeChat.messages, imageMessage],
       };
-      setActiveChat(finalChat);
-      setChats(chats.map((c) => (c.id === activeChat.id ? finalChat : c)));
+      setActiveChat(updatedChat);
+      setChats(chats.map((c) => (c.id === activeChat.id ? updatedChat : c)));
 
-      // Add to global gallery
-      const newAd = {
-        id: imageMessage.id,
-        imageUrl,
-        brandName,
-        promotionText,
-        originalPrompt: inputPrompt,
-        enhancedPrompt,
-        style: selectedStyle,
-        category: activeChat.category,
-        timestamp: Date.now(),
-      };
-      setGeneratedAds([newAd, ...generatedAds]);
+      // FIX: Check if setGeneratedAds is a function before calling
+      if (typeof setGeneratedAds === 'function') {
+        const newAd = {
+          id: imageMessage.id,
+          imageUrl,
+          brandName,
+          promotionText,
+          originalPrompt: inputPrompt,
+          enhancedPrompt,
+          style: selectedStyle,
+          category: activeChat.category,
+          caption: generatedCaption,
+          hashtags: generatedHashtags,
+          timestamp: Date.now(),
+        };
+        
+        const currentAds = Array.isArray(generatedAds) ? generatedAds : [];
+        setGeneratedAds([newAd, ...currentAds]);
+      }
 
-      // Reset form
       setInputPrompt("");
       setBrandName("");
       setPromotionText("");
       setEnhancedPrompt("");
+
     } catch (error) {
       console.error("Error:", error);
       alert(`Failed to generate image: ${error.message}`);
+      setProgress(0);
+      setProgressMessage("");
     } finally {
       setIsGenerating(false);
     }
+  };
+
+  const loadPreviousGeneration = (message) => {
+    // Load all details from a previous generation
+    setGeneratedImage(message.content);
+    setCaption(message.caption || "");
+    setHashtags(message.hashtags || []);
+    setBrandName(message.brandName || "");
+    setPromotionText(message.promotionText || "");
+    setSelectedStyle(message.style || "modern");
   };
 
   const downloadImage = async (imageUrl, filename) => {
@@ -305,11 +579,53 @@ export default function AdGenerator({ generatedAds, setGeneratedAds }) {
     }
   };
 
+  const copyToClipboard = (text) => {
+    navigator.clipboard.writeText(text);
+    alert("Copied to clipboard!");
+  };
+
+  const handleUseExample = (example) => {
+    // If no active chat, create one first
+    if (!activeChat) {
+      const newChat = {
+        id: Date.now().toString(),
+        name: `${example.category} Campaign 1`,
+        category: example.category,
+        messages: [],
+        createdAt: Date.now(),
+      };
+      setChats([newChat, ...chats]);
+      setActiveChat(newChat);
+      setSelectedCategory(example.category);
+    }
+    
+    // Fill all form fields with the example data
+    setBrandName(example.brand);
+    setPromotionText(example.promotion);
+    setSelectedStyle(example.style);
+    setInputPrompt(example.description);
+    
+    // Reset other states
+    setShowEnhanced(false);
+    setEnhancedPrompt("");
+    setGeneratedImage(null);
+    setCaption("");
+    setHashtags([]);
+    setProgress(0);
+  };
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 text-white">
+    <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 text-white overflow-hidden">
+      {/* Examples Modal */}
+      <ExamplesModal
+        isOpen={showExamples}
+        onClose={() => setShowExamples(false)}
+        onUseExample={handleUseExample}
+      />
+
       {/* Header */}
       <header className="border-b border-slate-800 bg-slate-950/50 backdrop-blur-xl sticky top-0 z-50">
-        <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+        <div className="px-6 py-4 flex items-center justify-between">
           <div className="flex items-center gap-4">
             <button
               onClick={() => navigate("/dashboard")}
@@ -317,331 +633,443 @@ export default function AdGenerator({ generatedAds, setGeneratedAds }) {
             >
               <ArrowLeft className="w-5 h-5" />
             </button>
+            <button
+              onClick={() => setSidebarOpen(!sidebarOpen)}
+              className="p-2 hover:bg-slate-800 rounded-lg transition-all"
+              title={sidebarOpen ? "Close sidebar" : "Open sidebar"}
+            >
+              {sidebarOpen ? <ChevronLeft className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+            </button>
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 bg-gradient-to-br from-violet-500 to-fuchsia-500 rounded-xl flex items-center justify-center">
                 <Sparkles className="w-6 h-6" />
               </div>
               <div>
                 <h1 className="text-xl font-bold">Ad Generator</h1>
-                <p className="text-xs text-slate-400">
-                  Create stunning banners
-                </p>
+                <p className="text-xs text-slate-400">Create stunning banners</p>
               </div>
             </div>
           </div>
+          <button
+            onClick={() => setShowExamples(true)}
+            className="px-4 py-2 bg-violet-500/20 hover:bg-violet-500/30 border border-violet-500/30 rounded-lg transition-all flex items-center gap-2 text-violet-300"
+          >
+            <Lightbulb className="w-4 h-4" />
+            Examples
+          </button>
         </div>
       </header>
 
-      <div className="max-w-7xl mx-auto px-6 py-6 flex gap-6 h-[calc(100vh-88px)]">
-        {/* Sidebar */}
-        <div className="w-80 flex flex-col gap-4">
-          {/* Category Selector */}
-          <div className="bg-slate-900/50 rounded-xl p-4 border border-slate-800">
-            <h3 className="text-sm font-semibold mb-3 text-slate-400">
-              New Campaign
-            </h3>
-            <div className="grid grid-cols-2 gap-2">
+      <div className="flex h-[calc(100vh-73px)]">
+        {/* Collapsible Sidebar */}
+        <div
+          className={`border-r border-slate-800 bg-slate-950/30 transition-all duration-300 flex-shrink-0 ${
+            sidebarOpen ? "w-80" : "w-0"
+          } overflow-hidden`}
+        >
+          <div className="w-80 h-full flex flex-col p-4 gap-4">
+            {/* Category Tabs */}
+            <div className="bg-slate-900/50 rounded-xl border border-slate-800 p-2 flex-shrink-0">
               {categories.map((cat) => {
                 const Icon = cat.icon;
+                const categoryCount = chatsByCategory[cat.name]?.length || 0;
                 return (
                   <button
                     key={cat.name}
-                    onClick={() => createNewChat(cat.name)}
-                    className="p-3 rounded-lg bg-slate-800/50 hover:bg-slate-700 transition-all group text-left"
+                    onClick={() => setSelectedCategory(cat.name)}
+                    className={`w-full p-3 rounded-lg transition-all flex items-center justify-between ${
+                      selectedCategory === cat.name
+                        ? "bg-violet-500 text-white"
+                        : "bg-transparent text-slate-400 hover:bg-slate-800"
+                    }`}
                   >
-                    <Icon className="w-5 h-5 mb-2 text-slate-400 group-hover:text-violet-400" />
-                    <p className="text-xs font-medium">{cat.name}</p>
+                    <div className="flex items-center gap-3">
+                      <Icon className="w-5 h-5" />
+                      <span className="text-sm font-medium">{cat.name}</span>
+                    </div>
+                    <span className="text-xs px-2 py-1 rounded-full bg-white/10">
+                      {categoryCount}
+                    </span>
                   </button>
                 );
               })}
             </div>
-          </div>
 
-          {/* Chats List */}
-          <div className="flex-1 overflow-y-auto bg-slate-900/50 rounded-xl p-4 border border-slate-800">
-            <h3 className="text-sm font-semibold mb-3 text-slate-400">
-              Your Campaigns
-            </h3>
-            <div className="space-y-2">
-              {chats.map((chat) => (
-                <div
-                  key={chat.id}
-                  className={`p-3 rounded-lg cursor-pointer transition-all group ${
-                    activeChat?.id === chat.id
-                      ? "bg-violet-500/20 border border-violet-500"
-                      : "bg-slate-800/50 hover:bg-slate-800 border border-transparent"
-                  }`}
-                  onClick={() => {
-                    setActiveChat(chat);
-                    setShowEnhanced(false);
-                  }}
-                >
-                  <div className="flex items-center justify-between">
-                    {editingChatId === chat.id ? (
-                      <input
-                        type="text"
-                        value={editingName}
-                        onChange={(e) => setEditingName(e.target.value)}
-                        onBlur={() => updateChatName(chat.id, editingName)}
-                        onKeyDown={(e) =>
-                          e.key === "Enter" &&
-                          updateChatName(chat.id, editingName)
-                        }
-                        className="bg-slate-950 px-2 py-1 rounded text-sm flex-1 mr-2 outline-none"
-                        autoFocus
-                        onClick={(e) => e.stopPropagation()}
-                      />
-                    ) : (
-                      <div className="flex-1">
-                        <h4 className="font-medium text-sm">{chat.name}</h4>
-                        <p className="text-xs text-slate-400">
-                          {
-                            chat.messages.filter((m) => m.type === "image")
-                              .length
-                          }{" "}
-                          ads
-                        </p>
+            {/* New Campaign Button */}
+            <button
+              onClick={() => createNewChat(selectedCategory)}
+              className="w-full py-3 bg-gradient-to-r from-violet-500 to-fuchsia-500 rounded-xl font-semibold hover:opacity-90 transition-opacity flex items-center justify-center gap-2 flex-shrink-0"
+            >
+              <Plus className="w-5 h-5" />
+              New Campaign
+            </button>
+
+            {/* Chats List */}
+            <div className="flex-1 overflow-y-auto bg-slate-900/50 rounded-xl p-4 border border-slate-800 min-h-0">
+              <h3 className="text-sm font-semibold mb-3 text-slate-400">
+                {selectedCategory} Campaigns
+              </h3>
+              <div className="space-y-2">
+                {(chatsByCategory[selectedCategory] || []).map((chat) => (
+                  <div
+                    key={chat.id}
+                    className={`p-3 rounded-lg cursor-pointer transition-all group ${
+                      activeChat?.id === chat.id
+                        ? "bg-violet-500/20 border border-violet-500"
+                        : "bg-slate-800/50 hover:bg-slate-800 border border-transparent"
+                    }`}
+                    onClick={() => {
+                      setActiveChat(chat);
+                      resetForm();
+                    }}
+                  >
+                    <div className="flex items-center justify-between gap-2">
+                      {editingChatId === chat.id ? (
+                        <input
+                          type="text"
+                          value={editingName}
+                          onChange={(e) => setEditingName(e.target.value)}
+                          onBlur={() => updateChatName(chat.id, editingName)}
+                          onKeyDown={(e) =>
+                            e.key === "Enter" && updateChatName(chat.id, editingName)
+                          }
+                          className="bg-slate-950 px-2 py-1 rounded text-sm flex-1 mr-2 outline-none"
+                          autoFocus
+                          onClick={(e) => e.stopPropagation()}
+                        />
+                      ) : (
+                        <div className="flex-1 min-w-0">
+                          <h4 className="font-medium text-sm truncate">{chat.name}</h4>
+                          <p className="text-xs text-slate-400">
+                            {chat.messages.filter((m) => m.type === "image").length} ads
+                          </p>
+                        </div>
+                      )}
+                      <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity flex-shrink-0">
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setEditingChatId(chat.id);
+                            setEditingName(chat.name);
+                          }}
+                          className="p-1.5 hover:bg-slate-700 rounded"
+                        >
+                          <Edit2 className="w-3.5 h-3.5" />
+                        </button>
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            if (confirm("Delete this campaign?")) deleteChat(chat.id);
+                          }}
+                          className="p-1.5 hover:bg-red-500/20 rounded text-red-400"
+                        >
+                          <Trash2 className="w-3.5 h-3.5" />
+                        </button>
                       </div>
-                    )}
-                    <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
-                      <button
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          setEditingChatId(chat.id);
-                          setEditingName(chat.name);
-                        }}
-                        className="p-1.5 hover:bg-slate-700 rounded"
-                      >
-                        <Edit2 className="w-3.5 h-3.5" />
-                      </button>
-                      <button
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          if (confirm("Delete this campaign?"))
-                            deleteChat(chat.id);
-                        }}
-                        className="p-1.5 hover:bg-red-500/20 rounded text-red-400"
-                      >
-                        <Trash2 className="w-3.5 h-3.5" />
-                      </button>
                     </div>
                   </div>
-                </div>
-              ))}
-              {chats.length === 0 && (
-                <div className="text-center py-12 text-slate-500">
-                  <p className="text-sm">No campaigns yet</p>
-                  <p className="text-xs mt-1">Select a category above</p>
-                </div>
-              )}
+                ))}
+                {(!chatsByCategory[selectedCategory] ||
+                  chatsByCategory[selectedCategory].length === 0) && (
+                  <div className="text-center py-12 text-slate-500">
+                    <p className="text-sm">No campaigns yet</p>
+                    <p className="text-xs mt-1">Create your first one</p>
+                  </div>
+                )}
+              </div>
             </div>
           </div>
         </div>
 
         {/* Main Content */}
-        <div className="flex-1 flex flex-col bg-slate-900/30 rounded-2xl border border-slate-800 overflow-hidden">
+        <div className="flex-1 min-w-0 flex overflow-hidden">
           {activeChat ? (
             <>
-              {/* Chat Messages */}
-              <div className="flex-1 overflow-y-auto p-6 space-y-4">
-                {activeChat.messages.map((message) => (
-                  <div key={message.id}>
-                    {message.type === "user" && (
-                      <div className="flex justify-end mb-4">
-                        <div className="bg-violet-500 rounded-2xl rounded-br-md px-4 py-3 max-w-md">
-                          <p className="text-sm font-medium mb-2">
-                            {message.content}
-                          </p>
-                          {message.brandName && (
-                            <p className="text-xs opacity-80">
-                              Brand: {message.brandName}
-                            </p>
-                          )}
-                          {message.promotionText && (
-                            <p className="text-xs opacity-80">
-                              Promo: {message.promotionText}
-                            </p>
-                          )}
-                        </div>
-                      </div>
-                    )}
-                    {message.type === "image" && (
-                      <div className="bg-slate-800/50 rounded-2xl p-4 border border-slate-700">
-                        <img
-                          src={message.content}
-                          alt="Generated ad"
-                          className="w-full rounded-lg mb-4"
-                        />
-                        <div className="space-y-2 text-sm mb-4">
-                          {message.brandName && (
-                            <div>
-                              <span className="text-slate-400">Brand: </span>
-                              <span className="text-slate-200">
-                                {message.brandName}
+              {/* Left Panel - Form */}
+              <div className="w-1/2 p-6 overflow-y-auto border-r border-slate-800">
+                <h2 className="text-2xl font-bold mb-6">Ad Details</h2>
+
+                {/* Previous Generations - Show if chat has images */}
+                {activeChat.messages.filter(m => m.type === 'image').length > 0 && (
+                  <div className="mb-6">
+                    <div className="flex items-center justify-between mb-3">
+                      <h3 className="text-sm font-semibold text-slate-400">Previous Generations</h3>
+                      {activeChat.messages.filter(m => m.type === 'image').length > 4 && (
+                        <span className="text-xs text-slate-500">
+                          {activeChat.messages.filter(m => m.type === 'image').length} total
+                        </span>
+                      )}
+                    </div>
+                    <div className="grid grid-cols-2 gap-3">
+                      {activeChat.messages
+                        .filter(m => m.type === 'image')
+                        .slice(0, 4)
+                        .map((msg) => (
+                          <div
+                            key={msg.id}
+                            onClick={() => loadPreviousGeneration(msg)}
+                            className="relative group cursor-pointer rounded-lg overflow-hidden border border-slate-700 hover:border-violet-500 transition-all"
+                          >
+                            <img
+                              src={msg.content}
+                              alt="Previous generation"
+                              className="w-full aspect-video object-cover group-hover:scale-105 transition-transform"
+                            />
+                            <div className="absolute inset-0 bg-black/0 group-hover:bg-black/60 transition-all flex items-center justify-center">
+                              <span className="text-white text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity">
+                                View Details
                               </span>
                             </div>
-                          )}
-                          <div>
-                            <span className="text-slate-400">Original: </span>
-                            <span className="text-slate-200">
-                              {message.originalPrompt}
-                            </span>
+                            {msg.brandName && (
+                              <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-2">
+                                <p className="text-white text-xs font-medium truncate">
+                                  {msg.brandName}
+                                </p>
+                              </div>
+                            )}
                           </div>
-                          <div>
-                            <span className="text-slate-400">Enhanced: </span>
-                            <span className="text-slate-300 text-xs">
-                              {message.prompt}
-                            </span>
-                          </div>
-                        </div>
-                        <button
-                          onClick={() =>
-                            downloadImage(
-                              message.content,
-                              `${message.brandName || "ad"}-banner-${
-                                message.id
-                              }.png`
-                            )
-                          }
-                          className="w-full py-3 bg-gradient-to-r from-violet-500 to-fuchsia-500 rounded-xl font-semibold hover:opacity-90 transition-opacity flex items-center justify-center gap-2"
-                        >
-                          <Download className="w-4 h-4" />
-                          Download Banner
-                        </button>
-                      </div>
-                    )}
-                  </div>
-                ))}
-              </div>
-
-              {/* Input Section */}
-              <div className="border-t border-slate-800 p-6">
-                {!showEnhanced ? (
-                  <div className="space-y-4">
-                    {/* Brand Details */}
-                    <div className="grid grid-cols-2 gap-3">
-                      <input
-                        type="text"
-                        value={brandName}
-                        onChange={(e) => setBrandName(e.target.value)}
-                        placeholder="Brand name (optional)"
-                        className="bg-slate-800 border border-slate-700 rounded-lg px-4 py-2 outline-none focus:border-violet-500 transition-colors text-sm"
-                      />
-                      <input
-                        type="text"
-                        value={promotionText}
-                        onChange={(e) => setPromotionText(e.target.value)}
-                        placeholder="Promotion text (optional)"
-                        className="bg-slate-800 border border-slate-700 rounded-lg px-4 py-2 outline-none focus:border-violet-500 transition-colors text-sm"
-                      />
+                        ))}
                     </div>
+                  </div>
+                )}
 
-                    {/* Style Selector */}
+                <div className="space-y-6">
+                  <div>
+                    <label className="text-sm font-medium text-slate-300 mb-2 block">
+                      Brand Name
+                    </label>
+                    <input
+                      type="text"
+                      value={brandName}
+                      onChange={(e) => setBrandName(e.target.value)}
+                      placeholder="Enter brand name"
+                      className="w-full bg-slate-800/50 border border-slate-700 rounded-xl px-4 py-3 outline-none focus:border-violet-500 focus:ring-2 focus:ring-violet-500/20 transition-all"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="text-sm font-medium text-slate-300 mb-2 block">
+                      Promotion Text
+                    </label>
+                    <input
+                      type="text"
+                      value={promotionText}
+                      onChange={(e) => setPromotionText(e.target.value)}
+                      placeholder="e.g., 50% Off Holiday Sale"
+                      className="w-full bg-slate-800/50 border border-slate-700 rounded-xl px-4 py-3 outline-none focus:border-violet-500 focus:ring-2 focus:ring-violet-500/20 transition-all"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="text-sm font-medium text-slate-300 mb-3 block">
+                      Style
+                    </label>
                     <div className="flex gap-2 flex-wrap">
                       {styles.map((style) => (
                         <button
                           key={style}
                           onClick={() => setSelectedStyle(style)}
-                          className={`px-3 py-1 rounded-full text-xs font-medium transition-all ${
+                          className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
                             selectedStyle === style
                               ? "bg-violet-500 text-white"
-                              : "bg-slate-800 text-slate-400 hover:bg-slate-700"
+                              : "bg-slate-800/50 text-slate-300 hover:bg-slate-700 border border-slate-700"
                           }`}
                         >
                           {style}
                         </button>
                       ))}
                     </div>
-
-                    {/* Main Prompt */}
-                    <div className="flex gap-3">
-                      <input
-                        type="text"
-                        value={inputPrompt}
-                        onChange={(e) => setInputPrompt(e.target.value)}
-                        onKeyDown={(e) =>
-                          e.key === "Enter" && !isEnhancing && enhancePrompt()
-                        }
-                        placeholder="Describe your ad banner..."
-                        className="flex-1 bg-slate-800 border border-slate-700 rounded-xl px-4 py-3 outline-none focus:border-violet-500 transition-colors"
-                        disabled={isEnhancing}
-                      />
-                      <button
-                        onClick={enhancePrompt}
-                        disabled={!inputPrompt.trim() || isEnhancing}
-                        className="px-6 py-3 bg-gradient-to-r from-violet-500 to-fuchsia-500 rounded-xl font-semibold disabled:opacity-50 disabled:cursor-not-allowed hover:opacity-90 transition-opacity flex items-center gap-2"
-                      >
-                        {isEnhancing ? (
-                          <Loader2 className="w-5 h-5 animate-spin" />
-                        ) : (
-                          <Sparkles className="w-5 h-5" />
-                        )}
-                        Enhance
-                      </button>
-                    </div>
                   </div>
-                ) : (
-                  <div className="space-y-4">
-                    <div className="bg-slate-800/50 border border-violet-500/30 rounded-xl p-4">
+
+                  <div>
+                    <label className="text-sm font-medium text-slate-300 mb-2 block">
+                      Description
+                    </label>
+                    <textarea
+                      value={inputPrompt}
+                      onChange={(e) => setInputPrompt(e.target.value)}
+                      placeholder="Describe your ad banner..."
+                      rows={5}
+                      className="w-full bg-slate-800/50 border border-slate-700 rounded-xl px-4 py-3 outline-none focus:border-violet-500 focus:ring-2 focus:ring-violet-500/20 transition-all resize-none"
+                    />
+                  </div>
+
+                  {showEnhanced && (
+                    <div className="bg-violet-500/10 border border-violet-500/30 rounded-xl p-4">
                       <div className="flex items-center justify-between mb-3">
-                        <div className="flex items-center gap-2 text-violet-400">
-                          <Sparkles className="w-4 h-4" />
-                          <span className="font-semibold text-sm">
-                            Enhanced Prompt
-                          </span>
+                        <div className="flex items-center gap-2 text-violet-300">
+                          <Sparkles className="w-5 h-5" />
+                          <span className="font-semibold">Enhanced Prompt</span>
                         </div>
                         <button
                           onClick={() => {
                             setShowEnhanced(false);
                             setEnhancedPrompt("");
                           }}
-                          className="p-1 hover:bg-slate-700 rounded"
+                          className="p-2 hover:bg-slate-700/50 rounded-lg"
                         >
                           <X className="w-4 h-4" />
                         </button>
                       </div>
                       <p className="text-sm text-slate-200">{enhancedPrompt}</p>
                     </div>
-                    <div className="flex gap-3">
+                  )}
+
+                  {progress > 0 && (
+                    <div className="space-y-3">
+                      <div className="flex items-center justify-between text-sm">
+                        <span className="text-slate-300">{progressMessage}</span>
+                        <span className="text-violet-400 font-bold">{progress}%</span>
+                      </div>
+                      <div className="w-full bg-slate-800 rounded-full h-3 overflow-hidden">
+                        <div
+                          className="h-full bg-gradient-to-r from-violet-500 to-fuchsia-500 transition-all duration-500"
+                          style={{ width: `${progress}%` }}
+                        />
+                      </div>
+                    </div>
+                  )}
+
+                  <div className="pt-4">
+                    {!showEnhanced ? (
                       <button
-                        onClick={() => {
-                          setShowEnhanced(false);
-                          setEnhancedPrompt("");
-                        }}
-                        className="flex-1 py-3 bg-slate-800 rounded-xl font-semibold hover:bg-slate-700 transition-all"
+                        onClick={enhancePrompt}
+                        disabled={!inputPrompt.trim() || isEnhancing}
+                        className="w-full py-4 bg-gradient-to-r from-violet-500 to-fuchsia-500 rounded-xl font-semibold disabled:opacity-50 hover:opacity-90 transition-all flex items-center justify-center gap-2"
                       >
-                        Edit
-                      </button>
-                      <button
-                        onClick={generateImage}
-                        disabled={isGenerating}
-                        className="flex-1 py-3 bg-gradient-to-r from-violet-500 to-fuchsia-500 rounded-xl font-semibold disabled:opacity-50 hover:opacity-90 transition-opacity flex items-center justify-center gap-2"
-                      >
-                        {isGenerating ? (
+                        {isEnhancing ? (
                           <>
                             <Loader2 className="w-5 h-5 animate-spin" />
-                            Generating...
+                            Enhancing...
                           </>
                         ) : (
                           <>
-                            <Check className="w-5 h-5" />
-                            Generate Banner
+                            <Sparkles className="w-5 h-5" />
+                            Enhance Prompt
                           </>
                         )}
                       </button>
+                    ) : (
+                      <div className="flex gap-3">
+                        <button
+                          onClick={() => {
+                            setShowEnhanced(false);
+                            setEnhancedPrompt("");
+                          }}
+                          className="flex-1 py-4 bg-slate-800 rounded-xl font-semibold hover:bg-slate-700 transition-all"
+                        >
+                          Edit
+                        </button>
+                        <button
+                          onClick={generateImage}
+                          disabled={isGenerating}
+                          className="flex-1 py-4 bg-gradient-to-r from-violet-500 to-fuchsia-500 rounded-xl font-semibold disabled:opacity-50 hover:opacity-90 transition-all flex items-center justify-center gap-2"
+                        >
+                          {isGenerating ? (
+                            <>
+                              <Loader2 className="w-5 h-5 animate-spin" />
+                              Generating...
+                            </>
+                          ) : (
+                            <>
+                              <Check className="w-5 h-5" />
+                              Generate
+                            </>
+                          )}
+                        </button>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </div>
+
+              {/* Right Panel - Preview */}
+              <div className="flex-1 p-6 overflow-y-auto">
+                <h2 className="text-2xl font-bold mb-6">Preview</h2>
+
+                {generatedImage ? (
+                  <div className="space-y-6">
+                    <div className="rounded-2xl overflow-hidden border border-slate-700 shadow-2xl">
+                      <img src={generatedImage} alt="Generated ad" className="w-full" />
+                    </div>
+
+                    {caption && (
+                      <div className="bg-slate-800/50 rounded-xl p-5 border border-slate-700">
+                        <div className="flex items-center justify-between mb-3">
+                          <div className="flex items-center gap-2">
+                            <MessageSquare className="w-5 h-5" />
+                            <span className="font-semibold">Caption</span>
+                          </div>
+                          <button
+                            onClick={() => copyToClipboard(caption)}
+                            className="p-2 hover:bg-slate-700 rounded-lg"
+                          >
+                            <Copy className="w-4 h-4" />
+                          </button>
+                        </div>
+                        <p className="text-sm text-slate-200">{caption}</p>
+                      </div>
+                    )}
+
+                    {hashtags.length > 0 && (
+                      <div className="bg-slate-800/50 rounded-xl p-5 border border-slate-700">
+                        <div className="flex items-center justify-between mb-3">
+                          <div className="flex items-center gap-2">
+                            <Hash className="w-5 h-5" />
+                            <span className="font-semibold">Hashtags</span>
+                          </div>
+                          <button
+                            onClick={() => copyToClipboard(hashtags.join(" "))}
+                            className="p-2 hover:bg-slate-700 rounded-lg"
+                          >
+                            <Copy className="w-4 h-4" />
+                          </button>
+                        </div>
+                        <div className="flex flex-wrap gap-2">
+                          {hashtags.map((tag, idx) => (
+                            <span
+                              key={idx}
+                              className="px-3 py-2 bg-violet-500/20 text-violet-300 rounded-lg text-sm"
+                            >
+                              {tag}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+
+                    <button
+                      onClick={() =>
+                        downloadImage(
+                          generatedImage,
+                          `${brandName || "ad"}-banner-${Date.now()}.png`
+                        )
+                      }
+                      className="w-full py-4 bg-gradient-to-r from-violet-500 to-fuchsia-500 rounded-xl font-semibold hover:opacity-90 transition-all flex items-center justify-center gap-2"
+                    >
+                      <Download className="w-5 h-5" />
+                      Download Banner
+                    </button>
+                  </div>
+                ) : (
+                  <div className="flex items-center justify-center h-full">
+                    <div className="text-center text-slate-500">
+                      <Sparkles className="w-20 h-20 mx-auto mb-4 opacity-30" />
+                      <h3 className="text-xl font-semibold mb-2">No Preview Yet</h3>
+                      <p className="text-sm">Fill in details and generate</p>
                     </div>
                   </div>
                 )}
               </div>
             </>
           ) : (
-            <div className="flex-1 flex items-center justify-center text-slate-500">
-              <div className="text-center">
-                <Sparkles className="w-16 h-16 mx-auto mb-4 opacity-50" />
-                <h3 className="text-lg font-semibold mb-2">
-                  No Campaign Selected
-                </h3>
-                <p className="text-sm">Select or create a campaign to start</p>
+            <div className="flex-1 flex items-center justify-center">
+              <div className="text-center text-slate-500">
+                <Sparkles className="w-20 h-20 mx-auto mb-4 opacity-30" />
+                <h3 className="text-xl font-semibold mb-2">No Campaign Selected</h3>
+                <p className="text-sm">
+                  {sidebarOpen ? "Select a campaign" : "Open sidebar to select"}
+                </p>
               </div>
             </div>
           )}
