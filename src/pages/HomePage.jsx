@@ -43,9 +43,14 @@ export default function HomePage({ generatedAds }) {
       {/* Navigation */}
       <nav className="border-b border-slate-800 bg-slate-950/50 backdrop-blur-xl">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4 flex items-center justify-between">
-          <div className="flex items-center gap-2 sm:gap-3">
-            <div className="w-8 sm:w-10 h-8 sm:h-10 bg-gradient-to-br from-violet-500 to-fuchsia-500 rounded-lg sm:rounded-xl flex items-center justify-center">
-              <Sparkles className="w-5 sm:w-6 h-5 sm:h-6" />
+          <div className="flex items-center gap-3 sm:gap-4">
+            {/* Logo Image */}
+            <div className="w-16 sm:w-20 h-16 sm:h-20 flex items-center justify-center">
+              <img
+                src="/image.png" 
+                alt="SnapBanner Logo"
+                className="w-full h-full object-contain"
+              />
             </div>
             <div>
               <h1 className="text-base sm:text-xl font-bold">SnapBanner</h1>
@@ -111,8 +116,12 @@ export default function HomePage({ generatedAds }) {
               <div className="w-10 sm:w-12 h-10 sm:h-12 rounded-xl bg-gradient-to-br from-violet-500/20 to-fuchsia-500/20 flex items-center justify-center mb-3 sm:mb-4 group-hover:scale-110 transition-transform">
                 <feature.icon className="w-5 sm:w-6 h-5 sm:h-6 text-violet-400" />
               </div>
-              <h3 className="text-base sm:text-lg font-semibold mb-2">{feature.title}</h3>
-              <p className="text-slate-400 text-xs sm:text-sm">{feature.description}</p>
+              <h3 className="text-base sm:text-lg font-semibold mb-2">
+                {feature.title}
+              </h3>
+              <p className="text-slate-400 text-xs sm:text-sm">
+                {feature.description}
+              </p>
             </div>
           ))}
         </div>
@@ -128,8 +137,9 @@ export default function HomePage({ generatedAds }) {
               Real Results from Our AI
             </h2>
             <p className="text-slate-300 text-sm sm:text-base md:text-lg max-w-2xl mx-auto">
-              Every banner below was created in seconds using simple prompts. 
-              From e-commerce to food delivery, fashion to tech—see the quality and variety our AI delivers.
+              Every banner below was created in seconds using simple prompts.
+              From e-commerce to food delivery, fashion to tech—see the quality
+              and variety our AI delivers.
             </p>
           </div>
 
@@ -161,7 +171,8 @@ export default function HomePage({ generatedAds }) {
 
           <div className="text-center mt-8 sm:mt-10">
             <p className="text-slate-400 text-xs sm:text-sm mb-4">
-              Each banner crafted in under 10 seconds with professional-grade quality
+              Each banner crafted in under 10 seconds with professional-grade
+              quality
             </p>
             <button
               onClick={() => navigate("/generator")}
@@ -178,7 +189,9 @@ export default function HomePage({ generatedAds }) {
       {recentAds.length > 0 && (
         <section className="max-w-7xl mx-auto px-4 sm:px-6 py-10 sm:py-16 border-t border-slate-800">
           <div className="text-center mb-8 sm:mb-12">
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-3 sm:mb-4">Recent Creations</h2>
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-3 sm:mb-4">
+              Recent Creations
+            </h2>
             <p className="text-slate-400 text-sm sm:text-base md:text-lg">
               See what others have created with AI Ads Generator
             </p>
@@ -200,7 +213,9 @@ export default function HomePage({ generatedAds }) {
                 <div className="p-3 sm:p-4">
                   <div className="flex items-center justify-between mb-2">
                     {ad.brandName && (
-                      <h3 className="font-semibold text-base sm:text-lg truncate">{ad.brandName}</h3>
+                      <h3 className="font-semibold text-base sm:text-lg truncate">
+                        {ad.brandName}
+                      </h3>
                     )}
                     <span className="px-2 py-1 rounded-full bg-violet-500/20 text-violet-300 text-xs flex-shrink-0 ml-2">
                       {ad.category}

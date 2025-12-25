@@ -24,7 +24,7 @@ import {
   Zap,
 } from "lucide-react";
 
-// Examples Modal Component (inline to avoid import issues)
+// Examples Modal Component
 function ExamplesModal({ isOpen, onClose, onUseExample }) {
   const [copiedId, setCopiedId] = useState(null);
 
@@ -35,8 +35,9 @@ function ExamplesModal({ isOpen, onClose, onUseExample }) {
       brand: "TechVibe",
       promotion: "40% Off Black Friday Sale",
       style: "modern",
-      description: "Sleek wireless earbuds with charging case, floating on gradient background, product photography style",
-      tags: ["Tech", "Products", "Sale"]
+      description:
+        "Sleek wireless earbuds with charging case, floating on gradient background, product photography style",
+      tags: ["Tech", "Products", "Sale"],
     },
     {
       id: 2,
@@ -44,8 +45,9 @@ function ExamplesModal({ isOpen, onClose, onUseExample }) {
       brand: "Brew & Co.",
       promotion: "Buy 2 Get 1 Free",
       style: "casual",
-      description: "Steaming cup of latte with latte art, coffee beans scattered around, rustic wooden table, morning light",
-      tags: ["Coffee", "Beverage", "Cafe"]
+      description:
+        "Steaming cup of latte with latte art, coffee beans scattered around, rustic wooden table, morning light",
+      tags: ["Coffee", "Beverage", "Cafe"],
     },
     {
       id: 3,
@@ -53,8 +55,9 @@ function ExamplesModal({ isOpen, onClose, onUseExample }) {
       brand: "FitPro Athletics",
       promotion: "Summer Sale - Up to 60% Off",
       style: "vibrant",
-      description: "Athletic woman in yoga pose wearing activewear, sunset beach background, energetic and motivational",
-      tags: ["Sportswear", "Fitness", "Active"]
+      description:
+        "Athletic woman in yoga pose wearing activewear, sunset beach background, energetic and motivational",
+      tags: ["Sportswear", "Fitness", "Active"],
     },
     {
       id: 4,
@@ -62,8 +65,9 @@ function ExamplesModal({ isOpen, onClose, onUseExample }) {
       brand: "Pixel Perfect",
       promotion: "Free Consultation",
       style: "professional",
-      description: "Modern office workspace, laptop showing creative designs, team collaboration, sleek and corporate",
-      tags: ["Agency", "Professional", "Corporate"]
+      description:
+        "Modern office workspace, laptop showing creative designs, team collaboration, sleek and corporate",
+      tags: ["Agency", "Professional", "Corporate"],
     },
     {
       id: 5,
@@ -71,8 +75,9 @@ function ExamplesModal({ isOpen, onClose, onUseExample }) {
       brand: "Cozy Haven",
       promotion: "Free Shipping This Week",
       style: "minimalist",
-      description: "Scandinavian-style living room with plants, natural wood furniture, warm sunlight through windows",
-      tags: ["Home Decor", "Minimalist", "Interior"]
+      description:
+        "Scandinavian-style living room with plants, natural wood furniture, warm sunlight through windows",
+      tags: ["Home Decor", "Minimalist", "Interior"],
     },
     {
       id: 6,
@@ -80,8 +85,9 @@ function ExamplesModal({ isOpen, onClose, onUseExample }) {
       brand: "Bella Italia",
       promotion: "Happy Hour 5-7 PM",
       style: "vibrant",
-      description: "Delicious pizza with melting cheese, fresh basil, tomatoes, Italian flag colors in background",
-      tags: ["Restaurant", "Italian", "Food"]
+      description:
+        "Delicious pizza with melting cheese, fresh basil, tomatoes, Italian flag colors in background",
+      tags: ["Restaurant", "Italian", "Food"],
     },
     {
       id: 7,
@@ -89,8 +95,9 @@ function ExamplesModal({ isOpen, onClose, onUseExample }) {
       brand: "Noir Elegance",
       promotion: "Exclusive Collection Launch",
       style: "luxury",
-      description: "Black evening gown on runway, spotlight effect, bokeh lights, high fashion photography",
-      tags: ["Luxury", "Fashion", "Elegant"]
+      description:
+        "Black evening gown on runway, spotlight effect, bokeh lights, high fashion photography",
+      tags: ["Luxury", "Fashion", "Elegant"],
     },
     {
       id: 8,
@@ -98,9 +105,10 @@ function ExamplesModal({ isOpen, onClose, onUseExample }) {
       brand: "Glow Cosmetics",
       promotion: "New Skincare Line",
       style: "elegant",
-      description: "Luxury skincare bottles on marble surface, water droplets, botanical elements, soft pink lighting, spa-like atmosphere",
-      tags: ["Beauty", "Skincare", "Premium"]
-    }
+      description:
+        "Luxury skincare bottles on marble surface, water droplets, botanical elements, soft pink lighting, spa-like atmosphere",
+      tags: ["Beauty", "Skincare", "Premium"],
+    },
   ];
 
   const quickTips = [
@@ -108,7 +116,7 @@ function ExamplesModal({ isOpen, onClose, onUseExample }) {
     "Mention photography style (commercial, editorial, product)",
     "Include mood/atmosphere (energetic, calm, luxurious)",
     "Describe composition (centered, floating, close-up)",
-    "Add quality keywords (professional, high-resolution, detailed)"
+    "Add quality keywords (professional, high-resolution, detailed)",
   ];
 
   const copyExample = (example) => {
@@ -116,7 +124,7 @@ function ExamplesModal({ isOpen, onClose, onUseExample }) {
 Promotion: ${example.promotion}
 Style: ${example.style}
 Description: ${example.description}`;
-    
+
     navigator.clipboard.writeText(text);
     setCopiedId(example.id);
     setTimeout(() => setCopiedId(null), 2000);
@@ -127,15 +135,18 @@ Description: ${example.description}`;
   return (
     <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
       <div className="max-w-5xl w-full bg-slate-900 rounded-2xl border border-slate-800 overflow-hidden max-h-[90vh] flex flex-col">
-        {/* Header */}
         <div className="p-4 sm:p-6 border-b border-slate-800 flex items-center justify-between bg-slate-950/50">
           <div className="flex items-center gap-2 sm:gap-3">
             <div className="w-8 sm:w-10 h-8 sm:h-10 rounded-lg sm:rounded-xl bg-gradient-to-br from-violet-500 to-fuchsia-500 flex items-center justify-center">
               <Lightbulb className="w-5 sm:w-6 h-5 sm:h-6" />
             </div>
             <div>
-              <h2 className="text-lg sm:text-2xl font-bold">Examples & Inspiration</h2>
-              <p className="text-xs sm:text-sm text-slate-400 hidden sm:block">Get started with these ready-to-use templates</p>
+              <h2 className="text-lg sm:text-2xl font-bold">
+                Examples & Inspiration
+              </h2>
+              <p className="text-xs sm:text-sm text-slate-400 hidden sm:block">
+                Get started with these ready-to-use templates
+              </p>
             </div>
           </div>
           <button
@@ -146,9 +157,7 @@ Description: ${example.description}`;
           </button>
         </div>
 
-        {/* Content */}
         <div className="flex-1 overflow-y-auto p-4 sm:p-6">
-          {/* Quick Tips */}
           <div className="mb-6 sm:mb-8 bg-violet-500/10 border border-violet-500/20 rounded-xl p-4 sm:p-6">
             <h3 className="text-base sm:text-lg font-semibold mb-3 sm:mb-4 flex items-center gap-2">
               <Lightbulb className="w-4 sm:w-5 h-4 sm:h-5 text-violet-400" />
@@ -156,7 +165,10 @@ Description: ${example.description}`;
             </h3>
             <ul className="space-y-2">
               {quickTips.map((tip, idx) => (
-                <li key={idx} className="flex items-start gap-2 sm:gap-3 text-xs sm:text-sm text-slate-300">
+                <li
+                  key={idx}
+                  className="flex items-start gap-2 sm:gap-3 text-xs sm:text-sm text-slate-300"
+                >
                   <span className="text-violet-400 mt-0.5">•</span>
                   <span>{tip}</span>
                 </li>
@@ -164,8 +176,9 @@ Description: ${example.description}`;
             </ul>
           </div>
 
-          {/* Examples Grid */}
-          <h3 className="text-base sm:text-lg font-semibold mb-3 sm:mb-4">Popular Examples</h3>
+          <h3 className="text-base sm:text-lg font-semibold mb-3 sm:mb-4">
+            Popular Examples
+          </h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
             {examples.map((example) => (
               <div
@@ -182,8 +195,12 @@ Description: ${example.description}`;
                         {example.style}
                       </span>
                     </div>
-                    <h4 className="font-semibold text-base sm:text-lg">{example.brand}</h4>
-                    <p className="text-xs sm:text-sm text-violet-400 mt-1">{example.promotion}</p>
+                    <h4 className="font-semibold text-base sm:text-lg">
+                      {example.brand}
+                    </h4>
+                    <p className="text-xs sm:text-sm text-violet-400 mt-1">
+                      {example.promotion}
+                    </p>
                   </div>
                   <div className="flex gap-2">
                     <button
@@ -239,17 +256,15 @@ export default function AdGenerator({ generatedAds, setGeneratedAds }) {
   const [chats, setChats] = useState([]);
   const [activeChat, setActiveChat] = useState(null);
   const [selectedCategory, setSelectedCategory] = useState("E-commerce");
-  const [sidebarOpen, setSidebarOpen] = useState(false); // Changed default to false for mobile
+  const [sidebarOpen, setSidebarOpen] = useState(false);
   const [showExamples, setShowExamples] = useState(false);
-  
-  // Form inputs
+
   const [inputPrompt, setInputPrompt] = useState("");
   const [enhancedPrompt, setEnhancedPrompt] = useState("");
   const [brandName, setBrandName] = useState("");
   const [promotionText, setPromotionText] = useState("");
   const [selectedStyle, setSelectedStyle] = useState("modern");
-  
-  // UI states
+
   const [isEnhancing, setIsEnhancing] = useState(false);
   const [isGenerating, setIsGenerating] = useState(false);
   const [showEnhanced, setShowEnhanced] = useState(false);
@@ -257,8 +272,7 @@ export default function AdGenerator({ generatedAds, setGeneratedAds }) {
   const [progressMessage, setProgressMessage] = useState("");
   const [editingChatId, setEditingChatId] = useState(null);
   const [editingName, setEditingName] = useState("");
-  
-  // Generated content
+
   const [generatedImage, setGeneratedImage] = useState(null);
   const [caption, setCaption] = useState("");
   const [hashtags, setHashtags] = useState([]);
@@ -267,11 +281,11 @@ export default function AdGenerator({ generatedAds, setGeneratedAds }) {
   const DEAPI_KEY = import.meta.env.VITE_DEAPI_KEY;
 
   const categories = [
-    { name: "E-commerce", icon: ShoppingBag, color: "blue" },
-    { name: "Clothing", icon: Shirt, color: "purple" },
-    { name: "Food", icon: UtensilsCrossed, color: "orange" },
-    { name: "Business", icon: Briefcase, color: "green" },
-    { name: "General", icon: Palette, color: "violet" },
+    { name: "E-commerce", icon: ShoppingBag },
+    { name: "Clothing", icon: Shirt },
+    { name: "Food", icon: UtensilsCrossed },
+    { name: "Business", icon: Briefcase },
+    { name: "General", icon: Palette },
   ];
 
   const styles = [
@@ -285,20 +299,20 @@ export default function AdGenerator({ generatedAds, setGeneratedAds }) {
     "casual",
   ];
 
-  // Auto-open sidebar on larger screens
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth >= 1024) {
         setSidebarOpen(true);
+      } else {
+        setSidebarOpen(false);
       }
     };
-    
+
     handleResize();
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  // Load chats
   useEffect(() => {
     try {
       const savedChats = localStorage.getItem("ai-ad-chats");
@@ -310,14 +324,12 @@ export default function AdGenerator({ generatedAds, setGeneratedAds }) {
     }
   }, []);
 
-  // Save chats
   useEffect(() => {
     if (chats.length > 0) {
       localStorage.setItem("ai-ad-chats", JSON.stringify(chats));
     }
   }, [chats]);
 
-  // Get chats by category
   const chatsByCategory = chats.reduce((acc, chat) => {
     const cat = chat.category || "General";
     if (!acc[cat]) acc[cat] = [];
@@ -380,7 +392,9 @@ export default function AdGenerator({ generatedAds, setGeneratedAds }) {
     setProgressMessage("Enhancing prompt with AI...");
 
     const warningTimeoutId = setTimeout(() => {
-      setProgressMessage("Still working... First request may take longer (cold start)");
+      setProgressMessage(
+        "Still working... First request may take longer (cold start)"
+      );
     }, 10000);
 
     try {
@@ -395,7 +409,9 @@ export default function AdGenerator({ generatedAds, setGeneratedAds }) {
       for (let attempt = 0; attempt < maxRetries; attempt++) {
         try {
           if (attempt > 0) {
-            setProgressMessage(`Retrying... (attempt ${attempt + 1}/${maxRetries})`);
+            setProgressMessage(
+              `Retrying... (attempt ${attempt + 1}/${maxRetries})`
+            );
           }
 
           const controller = new AbortController();
@@ -406,31 +422,32 @@ export default function AdGenerator({ generatedAds, setGeneratedAds }) {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ input: fullPrompt }),
-            signal: controller.signal
+            signal: controller.signal,
           });
 
           clearTimeout(abortTimeoutId);
 
           if (!enhanceResponse.ok) {
             const errorText = await enhanceResponse.text();
-            throw new Error(`Enhancement failed (${enhanceResponse.status}): ${errorText}`);
+            throw new Error(
+              `Enhancement failed (${enhanceResponse.status}): ${errorText}`
+            );
           }
 
           enhanceData = await enhanceResponse.json();
-          
+
           if (!enhanceData || !enhanceData.refined_prompt) {
-            throw new Error('Invalid response from enhancement service');
+            throw new Error("Invalid response from enhancement service");
           }
 
           break;
-
         } catch (error) {
-          if (error.name === 'AbortError' && attempt < maxRetries - 1) {
+          if (error.name === "AbortError" && attempt < maxRetries - 1) {
             console.log(`Attempt ${attempt + 1} timed out, retrying...`);
-            await new Promise(resolve => setTimeout(resolve, 2000));
+            await new Promise((resolve) => setTimeout(resolve, 2000));
             continue;
           }
-          
+
           throw error;
         }
       }
@@ -438,22 +455,25 @@ export default function AdGenerator({ generatedAds, setGeneratedAds }) {
       clearTimeout(warningTimeoutId);
 
       if (!enhanceData || !enhanceData.refined_prompt) {
-        throw new Error('Failed to get valid response after retries');
+        throw new Error("Failed to get valid response after retries");
       }
 
       setEnhancedPrompt(enhanceData.refined_prompt);
       setShowEnhanced(true);
       setProgress(30);
       setProgressMessage("Prompt enhanced! Review and proceed.");
-      
     } catch (error) {
       clearTimeout(warningTimeoutId);
       console.error("Enhancement error:", error);
-      
-      if (error.name === 'AbortError') {
-        alert('Request timeout. The AI service took too long.\n\n💡 First request is often slower (cold start). Please try again - it should be faster!');
+
+      if (error.name === "AbortError") {
+        alert(
+          "Request timeout. The AI service took too long.\n\n💡 First request is often slower (cold start). Please try again - it should be faster!"
+        );
       } else {
-        alert(`Failed to enhance prompt: ${error.message}\n\n💡 Tip: Try again or use a simpler description.`);
+        alert(
+          `Failed to enhance prompt: ${error.message}\n\n💡 Tip: Try again or use a simpler description.`
+        );
       }
       setProgress(0);
       setProgressMessage("");
@@ -464,8 +484,6 @@ export default function AdGenerator({ generatedAds, setGeneratedAds }) {
 
   const generateDirectly = async () => {
     if (!inputPrompt.trim() || !activeChat) return;
-
-    // Use the input prompt directly without enhancement
     const finalPrompt = inputPrompt.trim();
     await generateImageWithPrompt(finalPrompt);
   };
@@ -544,16 +562,18 @@ export default function AdGenerator({ generatedAds, setGeneratedAds }) {
       };
 
       const imageUrl = await pollResult(requestId);
-      
+
       setProgress(85);
       setProgressMessage("Generating caption...");
 
       const metadataResponse = await fetch(CLOUDFLARE_API, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ 
-          input: `Generate a social media caption and hashtags for this ad: ${promptToUse}. Brand: ${brandName || 'N/A'}. Promotion: ${promotionText || 'N/A'}`,
-          mode: "caption"
+        body: JSON.stringify({
+          input: `Generate a social media caption and hashtags for this ad: ${promptToUse}. Brand: ${
+            brandName || "N/A"
+          }. Promotion: ${promotionText || "N/A"}`,
+          mode: "caption",
         }),
       });
 
@@ -594,7 +614,7 @@ export default function AdGenerator({ generatedAds, setGeneratedAds }) {
       setActiveChat(updatedChat);
       setChats(chats.map((c) => (c.id === activeChat.id ? updatedChat : c)));
 
-      if (typeof setGeneratedAds === 'function') {
+      if (typeof setGeneratedAds === "function") {
         const newAd = {
           id: imageMessage.id,
           imageUrl,
@@ -608,7 +628,7 @@ export default function AdGenerator({ generatedAds, setGeneratedAds }) {
           hashtags: generatedHashtags,
           timestamp: Date.now(),
         };
-        
+
         const currentAds = Array.isArray(generatedAds) ? generatedAds : [];
         setGeneratedAds([newAd, ...currentAds]);
       }
@@ -618,7 +638,6 @@ export default function AdGenerator({ generatedAds, setGeneratedAds }) {
       setPromotionText("");
       setEnhancedPrompt("");
       setShowEnhanced(false);
-
     } catch (error) {
       console.error("Error:", error);
       alert(`Failed to generate image: ${error.message}`);
@@ -674,12 +693,12 @@ export default function AdGenerator({ generatedAds, setGeneratedAds }) {
       setActiveChat(newChat);
       setSelectedCategory(example.category);
     }
-    
+
     setBrandName(example.brand);
     setPromotionText(example.promotion);
     setSelectedStyle(example.style);
     setInputPrompt(example.description);
-    
+
     setShowEnhanced(false);
     setEnhancedPrompt("");
     setGeneratedImage(null);
@@ -701,28 +720,38 @@ export default function AdGenerator({ generatedAds, setGeneratedAds }) {
         <div className="px-4 sm:px-6 py-3 sm:py-4 flex items-center justify-between">
           <div className="flex items-center gap-2 sm:gap-4">
             <button
-              onClick={() => navigate("/dashboard")}
+              onClick={() => navigate("/")}
               className="p-2 hover:bg-slate-800 rounded-lg transition-all"
-              title="Back to dashboard"
+              title="Back to home"
             >
               <ArrowLeft className="w-4 sm:w-5 h-4 sm:h-5" />
             </button>
             <button
               onClick={() => setSidebarOpen(!sidebarOpen)}
-              className="p-2 hover:bg-slate-800 rounded-lg transition-all lg:hidden"
+              className="p-2 hover:bg-slate-800 rounded-lg transition-all"
               title={sidebarOpen ? "Close sidebar" : "Open sidebar"}
             >
-              {sidebarOpen ? <X className="w-4 sm:w-5 h-4 sm:h-5" /> : <Menu className="w-4 sm:w-5 h-4 sm:h-5" />}
+              {sidebarOpen ? (
+                <ChevronLeft className="w-4 sm:w-5 h-4 sm:h-5" />
+              ) : (
+                <Menu className="w-4 sm:w-5 h-4 sm:h-5" />
+              )}
             </button>
-            <div className="flex items-center gap-2 sm:gap-3">
-              <div className="w-8 sm:w-10 h-8 sm:h-10 bg-gradient-to-br from-violet-500 to-fuchsia-500 rounded-lg sm:rounded-xl flex items-center justify-center">
-                <Sparkles className="w-4 sm:w-6 h-4 sm:h-6" />
+            <div className="flex items-center  sm:gap-4">
+              {/* Logo Image */}
+              <div className="w-14 sm:w-20 h-14 sm:h-20 flex items-center justify-center">
+                <img
+                  src="/image.png"
+                  alt="SnapBanner Logo"
+                  className="w-full h-full object-contain"
+                />
               </div>
-              <div className="hidden sm:block">
-                <h1 className="text-lg sm:text-xl font-bold">Snap Banner</h1>
-                <p className="text-xs text-slate-400">Create stunning banners</p>
+              <div>
+                <h1 className="text-base sm:text-xl font-bold">SnapBanner</h1>
+                <p className="text-xs text-slate-400 hidden sm:block">
+                  Create stunning banners instantly
+                </p>
               </div>
-              <h1 className="text-base font-bold sm:hidden">Snap Banner</h1>
             </div>
           </div>
           <button
@@ -736,23 +765,21 @@ export default function AdGenerator({ generatedAds, setGeneratedAds }) {
       </header>
 
       <div className="flex flex-1 overflow-hidden">
-        {/* Sidebar - Overlay on mobile, side panel on desktop */}
+        {/* Sidebar */}
         {sidebarOpen && (
           <>
-            {/* Mobile overlay backdrop */}
-            <div 
+            <div
               className="fixed inset-0 bg-black/60 z-40 lg:hidden"
               onClick={() => setSidebarOpen(false)}
             />
-            
-            {/* Sidebar content */}
-            <div className="fixed lg:relative inset-y-0 left-0 w-80 lg:w-80 border-r border-slate-800 bg-slate-950/95 lg:bg-slate-950/30 z-50 lg:z-0 flex flex-col">
+
+            <div className="fixed lg:relative inset-y-0 left-0 w-80 border-r border-slate-800 bg-slate-950/95 lg:bg-slate-950/30 z-50 lg:z-0 flex flex-col">
               <div className="flex-1 overflow-y-auto p-4 space-y-4">
-                {/* Category Tabs */}
                 <div className="bg-slate-900/50 rounded-xl border border-slate-800 p-2">
                   {categories.map((cat) => {
                     const Icon = cat.icon;
-                    const categoryCount = chatsByCategory[cat.name]?.length || 0;
+                    const categoryCount =
+                      chatsByCategory[cat.name]?.length || 0;
                     return (
                       <button
                         key={cat.name}
@@ -765,7 +792,9 @@ export default function AdGenerator({ generatedAds, setGeneratedAds }) {
                       >
                         <div className="flex items-center gap-3">
                           <Icon className="w-5 h-5" />
-                          <span className="text-sm font-medium">{cat.name}</span>
+                          <span className="text-sm font-medium">
+                            {cat.name}
+                          </span>
                         </div>
                         <span className="text-xs px-2 py-1 rounded-full bg-white/10">
                           {categoryCount}
@@ -775,7 +804,6 @@ export default function AdGenerator({ generatedAds, setGeneratedAds }) {
                   })}
                 </div>
 
-                {/* New Campaign Button */}
                 <button
                   onClick={() => {
                     createNewChat(selectedCategory);
@@ -787,7 +815,6 @@ export default function AdGenerator({ generatedAds, setGeneratedAds }) {
                   New Campaign
                 </button>
 
-                {/* Chats List */}
                 <div className="bg-slate-900/50 rounded-xl p-4 border border-slate-800">
                   <h3 className="text-sm font-semibold mb-3 text-slate-400">
                     {selectedCategory} Campaigns
@@ -813,9 +840,12 @@ export default function AdGenerator({ generatedAds, setGeneratedAds }) {
                               type="text"
                               value={editingName}
                               onChange={(e) => setEditingName(e.target.value)}
-                              onBlur={() => updateChatName(chat.id, editingName)}
+                              onBlur={() =>
+                                updateChatName(chat.id, editingName)
+                              }
                               onKeyDown={(e) =>
-                                e.key === "Enter" && updateChatName(chat.id, editingName)
+                                e.key === "Enter" &&
+                                updateChatName(chat.id, editingName)
                               }
                               className="bg-slate-950 px-2 py-1 rounded text-sm flex-1 mr-2 outline-none"
                               autoFocus
@@ -823,9 +853,16 @@ export default function AdGenerator({ generatedAds, setGeneratedAds }) {
                             />
                           ) : (
                             <div className="flex-1 min-w-0">
-                              <h4 className="font-medium text-sm truncate">{chat.name}</h4>
+                              <h4 className="font-medium text-sm truncate">
+                                {chat.name}
+                              </h4>
                               <p className="text-xs text-slate-400">
-                                {chat.messages.filter((m) => m.type === "image").length} ads
+                                {
+                                  chat.messages.filter(
+                                    (m) => m.type === "image"
+                                  ).length
+                                }{" "}
+                                ads
                               </p>
                             </div>
                           )}
@@ -843,7 +880,8 @@ export default function AdGenerator({ generatedAds, setGeneratedAds }) {
                             <button
                               onClick={(e) => {
                                 e.stopPropagation();
-                                if (confirm("Delete this campaign?")) deleteChat(chat.id);
+                                if (confirm("Delete this campaign?"))
+                                  deleteChat(chat.id);
                               }}
                               className="p-1.5 hover:bg-red-500/20 rounded text-red-400"
                             >
@@ -874,22 +912,32 @@ export default function AdGenerator({ generatedAds, setGeneratedAds }) {
               {/* Form Panel */}
               <div className="w-full lg:w-1/2 overflow-y-auto border-b lg:border-b-0 lg:border-r border-slate-800">
                 <div className="p-4 sm:p-6">
-                  <h2 className="text-xl sm:text-2xl font-bold mb-4 sm:mb-6">Ad Details</h2>
+                  <h2 className="text-xl sm:text-2xl font-bold mb-4 sm:mb-6">
+                    Ad Details
+                  </h2>
 
-                  {/* Previous Generations */}
-                  {activeChat.messages.filter(m => m.type === 'image').length > 0 && (
+                  {activeChat.messages.filter((m) => m.type === "image")
+                    .length > 0 && (
                     <div className="mb-6">
                       <div className="flex items-center justify-between mb-3">
-                        <h3 className="text-sm font-semibold text-slate-400">Previous Generations</h3>
-                        {activeChat.messages.filter(m => m.type === 'image').length > 4 && (
+                        <h3 className="text-sm font-semibold text-slate-400">
+                          Previous Generations
+                        </h3>
+                        {activeChat.messages.filter((m) => m.type === "image")
+                          .length > 4 && (
                           <span className="text-xs text-slate-500">
-                            {activeChat.messages.filter(m => m.type === 'image').length} total
+                            {
+                              activeChat.messages.filter(
+                                (m) => m.type === "image"
+                              ).length
+                            }{" "}
+                            total
                           </span>
                         )}
                       </div>
                       <div className="grid grid-cols-2 gap-2 sm:gap-3">
                         {activeChat.messages
-                          .filter(m => m.type === 'image')
+                          .filter((m) => m.type === "image")
                           .slice(0, 4)
                           .map((msg) => (
                             <div
@@ -981,13 +1029,14 @@ export default function AdGenerator({ generatedAds, setGeneratedAds }) {
                       />
                     </div>
 
-                    {/* Enhanced Prompt Preview */}
                     {showEnhanced && (
                       <div className="bg-gradient-to-br from-violet-500/10 to-fuchsia-500/10 border border-violet-500/30 rounded-xl p-4">
                         <div className="flex items-center justify-between mb-3">
                           <div className="flex items-center gap-2 text-violet-300">
                             <Sparkles className="w-4 sm:w-5 h-4 sm:h-5" />
-                            <span className="font-semibold text-sm sm:text-base">AI Enhanced Prompt</span>
+                            <span className="font-semibold text-sm sm:text-base">
+                              AI Enhanced Prompt
+                            </span>
                           </div>
                           <button
                             onClick={() => {
@@ -1000,7 +1049,9 @@ export default function AdGenerator({ generatedAds, setGeneratedAds }) {
                             <X className="w-4 h-4" />
                           </button>
                         </div>
-                        <p className="text-xs sm:text-sm text-slate-200 mb-4">{enhancedPrompt}</p>
+                        <p className="text-xs sm:text-sm text-slate-200 mb-4">
+                          {enhancedPrompt}
+                        </p>
                         <div className="flex gap-2">
                           <button
                             onClick={() => {
@@ -1033,12 +1084,15 @@ export default function AdGenerator({ generatedAds, setGeneratedAds }) {
                       </div>
                     )}
 
-                    {/* Progress Bar */}
                     {progress > 0 && !showEnhanced && (
                       <div className="space-y-3">
                         <div className="flex items-center justify-between text-xs sm:text-sm">
-                          <span className="text-slate-300">{progressMessage}</span>
-                          <span className="text-violet-400 font-bold">{progress}%</span>
+                          <span className="text-slate-300">
+                            {progressMessage}
+                          </span>
+                          <span className="text-violet-400 font-bold">
+                            {progress}%
+                          </span>
                         </div>
                         <div className="w-full bg-slate-800 rounded-full h-2 sm:h-3 overflow-hidden">
                           <div
@@ -1049,12 +1103,13 @@ export default function AdGenerator({ generatedAds, setGeneratedAds }) {
                       </div>
                     )}
 
-                    {/* Action Buttons */}
                     {!showEnhanced && (
                       <div className="pt-4 space-y-3">
                         <button
                           onClick={enhancePrompt}
-                          disabled={!inputPrompt.trim() || isEnhancing || isGenerating}
+                          disabled={
+                            !inputPrompt.trim() || isEnhancing || isGenerating
+                          }
                           className="w-full py-3 sm:py-4 bg-gradient-to-r from-violet-500 to-fuchsia-500 rounded-xl font-semibold disabled:opacity-50 hover:opacity-90 transition-all flex items-center justify-center gap-2 text-sm sm:text-base"
                         >
                           {isEnhancing ? (
@@ -1069,19 +1124,23 @@ export default function AdGenerator({ generatedAds, setGeneratedAds }) {
                             </>
                           )}
                         </button>
-                        
+
                         <div className="relative">
                           <div className="absolute inset-0 flex items-center">
                             <div className="w-full border-t border-slate-700"></div>
                           </div>
                           <div className="relative flex justify-center text-xs">
-                            <span className="px-2 bg-slate-950 text-slate-500">or</span>
+                            <span className="px-2 bg-slate-950 text-slate-500">
+                              or
+                            </span>
                           </div>
                         </div>
 
                         <button
                           onClick={generateDirectly}
-                          disabled={!inputPrompt.trim() || isEnhancing || isGenerating}
+                          disabled={
+                            !inputPrompt.trim() || isEnhancing || isGenerating
+                          }
                           className="w-full py-3 bg-slate-800 hover:bg-slate-700 rounded-xl font-medium disabled:opacity-50 transition-all flex items-center justify-center gap-2 text-sm"
                         >
                           <Zap className="w-4 h-4" />
@@ -1096,12 +1155,18 @@ export default function AdGenerator({ generatedAds, setGeneratedAds }) {
               {/* Preview Panel */}
               <div className="flex-1 overflow-y-auto">
                 <div className="p-4 sm:p-6">
-                  <h2 className="text-xl sm:text-2xl font-bold mb-4 sm:mb-6">Preview</h2>
+                  <h2 className="text-xl sm:text-2xl font-bold mb-4 sm:mb-6">
+                    Preview
+                  </h2>
 
                   {generatedImage ? (
                     <div className="space-y-4 sm:space-y-6">
                       <div className="rounded-xl sm:rounded-2xl overflow-hidden border border-slate-700 shadow-2xl">
-                        <img src={generatedImage} alt="Generated ad" className="w-full" />
+                        <img
+                          src={generatedImage}
+                          alt="Generated ad"
+                          className="w-full"
+                        />
                       </div>
 
                       {caption && (
@@ -1109,7 +1174,9 @@ export default function AdGenerator({ generatedAds, setGeneratedAds }) {
                           <div className="flex items-center justify-between mb-3">
                             <div className="flex items-center gap-2">
                               <MessageSquare className="w-4 sm:w-5 h-4 sm:h-5" />
-                              <span className="font-semibold text-sm sm:text-base">Caption</span>
+                              <span className="font-semibold text-sm sm:text-base">
+                                Caption
+                              </span>
                             </div>
                             <button
                               onClick={() => copyToClipboard(caption)}
@@ -1119,7 +1186,9 @@ export default function AdGenerator({ generatedAds, setGeneratedAds }) {
                               <Copy className="w-4 h-4" />
                             </button>
                           </div>
-                          <p className="text-xs sm:text-sm text-slate-200">{caption}</p>
+                          <p className="text-xs sm:text-sm text-slate-200">
+                            {caption}
+                          </p>
                         </div>
                       )}
 
@@ -1128,10 +1197,14 @@ export default function AdGenerator({ generatedAds, setGeneratedAds }) {
                           <div className="flex items-center justify-between mb-3">
                             <div className="flex items-center gap-2">
                               <Hash className="w-4 sm:w-5 h-4 sm:h-5" />
-                              <span className="font-semibold text-sm sm:text-base">Hashtags</span>
+                              <span className="font-semibold text-sm sm:text-base">
+                                Hashtags
+                              </span>
                             </div>
                             <button
-                              onClick={() => copyToClipboard(hashtags.join(" "))}
+                              onClick={() =>
+                                copyToClipboard(hashtags.join(" "))
+                              }
                               className="p-2 hover:bg-slate-700 rounded-lg"
                               title="Copy hashtags"
                             >
@@ -1168,8 +1241,12 @@ export default function AdGenerator({ generatedAds, setGeneratedAds }) {
                     <div className="flex items-center justify-center h-64 lg:h-full">
                       <div className="text-center text-slate-500">
                         <Sparkles className="w-16 sm:w-20 h-16 sm:h-20 mx-auto mb-4 opacity-30" />
-                        <h3 className="text-lg sm:text-xl font-semibold mb-2">No Preview Yet</h3>
-                        <p className="text-xs sm:text-sm">Fill in details and generate</p>
+                        <h3 className="text-lg sm:text-xl font-semibold mb-2">
+                          No Preview Yet
+                        </h3>
+                        <p className="text-xs sm:text-sm">
+                          Fill in details and generate
+                        </p>
                       </div>
                     </div>
                   )}
@@ -1180,13 +1257,17 @@ export default function AdGenerator({ generatedAds, setGeneratedAds }) {
             <div className="flex-1 flex items-center justify-center p-6">
               <div className="text-center text-slate-500">
                 <Sparkles className="w-16 sm:w-20 h-16 sm:h-20 mx-auto mb-4 opacity-30" />
-                <h3 className="text-lg sm:text-xl font-semibold mb-2">No Campaign Selected</h3>
-                <p className="text-xs sm:text-sm mb-4">Create or select a campaign to start</p>
+                <h3 className="text-lg sm:text-xl font-semibold mb-2">
+                  No Campaign Selected
+                </h3>
+                <p className="text-xs sm:text-sm mb-4">
+                  Create or select a campaign to start
+                </p>
                 <button
                   onClick={() => setSidebarOpen(true)}
-                  className="px-6 py-3 bg-gradient-to-r from-violet-500 to-fuchsia-500 rounded-xl font-semibold hover:opacity-90 transition-all inline-flex items-center gap-2"
+                  className="px-6 py-3 bg-gradient-to-r from-violet-500 to-fuchsia-500 rounded-xl font-semibold hover:opacity-90 transition-all inline-flex items-center gap-2 text-white"
                 >
-                  <Menu className="w-4 h-4" />
+                  <Menu className="w-4 h-4 " />
                   Open Campaigns
                 </button>
               </div>
